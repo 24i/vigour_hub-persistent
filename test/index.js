@@ -20,6 +20,7 @@ test('dirty check', t => {
 
   dataHub.set({
     persistent: {
+      id: 'dataHub',
       server: {
         port: 9090,
         host: 'localhost'
