@@ -5,9 +5,10 @@
   "main": "./lib/index.js",
   "scripts": {
     "test": "(ducktape; node test) | tap-difflet && standard",
-    "watch": "nodemon test | tap-difflet",
+    "dev": "nodemon test | tap-difflet",
     "cover": "istanbul cover --report none --print detail test",
-    "travis": "npm run cover -s && istanbul report lcov && ((cat coverage/lcov.info | coveralls) || exit 0) && standard"
+    "travis": "npm run cover -s && istanbul report lcov && ((cat coverage/lcov.info | coveralls) || exit 0) && standard",
+    "start": "node bin/server"
   },
   "repository": {
     "type": "git",
