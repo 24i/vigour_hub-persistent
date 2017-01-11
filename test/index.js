@@ -71,4 +71,11 @@ test('dirty check', t => {
       someData: { to: 'test' }
     })
   }, 5000)
+
+  setTimeout(() => {
+    client.set(null)
+    dataHub.set(null)
+    server.close()
+    t.end()
+  }, 7000)
 })
