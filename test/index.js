@@ -69,7 +69,9 @@ test('dirty check', t => {
     server = pServer(9090)
 
     client.set({
-      someData: { to: 'test' }
+      someData: { to: 'test' },
+      someOther: 'data',
+      andAnother: { pathOne: 2, pathTwo: 1 }
     })
   }, 5000)
 
