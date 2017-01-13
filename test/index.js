@@ -75,10 +75,16 @@ test('dirty check', t => {
     })
   }, 5000)
 
+  /*
+  setTimeout(() => {
+    dataHub.get('persistent').load(false)
+  }, 7000)
+  */
+
   setTimeout(() => {
     client.set(null)
     dataHub.set(null)
     server.close()
     t.end()
-  }, 7000)
+  }, 9000)
 })
