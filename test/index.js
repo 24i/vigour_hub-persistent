@@ -84,5 +84,5 @@ test('dirty check', t => {
     dataHub.set(null)
     server.close()
     t.end()
-  }, 9000)
+  }, 8000)
 })
