@@ -77,12 +77,15 @@ test('dirty check', t => {
 
   setTimeout(() => {
     dataHub.get('persistent').load(false)
+      .then(() => {
+        console.log('load promise resolved')
+        client.set(null)
+        dataHub.set(null)
+        server.close()
+        t.end()
+      })
+      .catch(error => {
+        console.log('failed loading', error)
+      })
   }, 6000)
-
-  setTimeout(() => {
-    client.set(null)
-    dataHub.set(null)
-    server.close()
-    t.end()
-  }, 8000)
 })

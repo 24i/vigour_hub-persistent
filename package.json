@@ -39,6 +39,6 @@
     "coveralls": "^2.0.0",
     "istanbul": "0.4.5",
     "standard": "^8.0.0",
-    "hub.js": "0.0.4"
+    "hub.js": "0.0.7"
   }
 }
