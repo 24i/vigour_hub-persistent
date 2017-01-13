@@ -77,7 +77,7 @@ test('dirty check', t => {
 
   setTimeout(() => {
     dataHub.get('persistent').load(false)
-  }, 7000)
+  }, 6000)
 
   setTimeout(() => {
     client.set(null)
