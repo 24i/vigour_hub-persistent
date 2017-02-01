@@ -18,7 +18,7 @@
     "hub.js",
     "persistent",
     "persistence",
-    "leveldb"
+    "riak"
   ],
   "author": "Mustafa Dokumacı",
   "license": "ISC",
@@ -38,6 +38,6 @@
     "coveralls": "^2.0.0",
     "istanbul": "0.4.5",
     "standard": "^8.0.0",
-    "hub.js": "0.0.7"
+    "hub.js": "0.0.11"
   }
 }
