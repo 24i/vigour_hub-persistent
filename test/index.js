@@ -2,11 +2,8 @@
 
 const test = require('tape')
 const hub = require('hub.js')
-const pServer = require('../lib/server')
 
 test('dirty check', t => {
-  var server = pServer(9090)
-
   const dataHub = hub({
     port: 9595,
     inject: require('../')
@@ -15,30 +12,33 @@ test('dirty check', t => {
   const client = hub({
     url: 'ws://localhost:9595',
     context: false
-    // context: 'someKey'
   })
 
   dataHub.set({
     persistent: {
-      id: 'dataHub',
-      server: {
-        port: 9090,
-        host: 'localhost'
-      }
+      bucket: 'testBucket',
+      nodes: [ '127.0.0.1' ]
     }
   })
 
-  setTimeout(() => {
-    dataHub.set({
-      persistent: {
-        server: {
-          port: null,
-          host: null
-        }
-      }
+  dataHub.get(['persistent', 'connected'])
+    .once(true)
+    .then(() => {
+      t.pass('connected to riak')
+      client.set({
+        someData: { to: 'test' },
+        someOther: 'data',
+        andAnother: { pathOne: 2, pathTwo: 1 }
+      })
     })
-  }, 1000)
 
+  setTimeout(() => {
+    client.set(null)
+    dataHub.set(null)
+    t.end()
+  }, 3e3)
+
+  /*
   setTimeout(() => {
     dataHub.set({
       persistent: {
@@ -88,4 +88,6 @@ test('dirty check', t => {
         console.log('failed loading', error)
       })
   }, 6000)
+
+  */
 })
