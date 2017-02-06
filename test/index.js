@@ -21,27 +21,43 @@ test('dirty check', t => {
     }
   })
 
+  client.set({
+    someData: { to: 'test' },
+    someOther: 'data',
+    andAnother: { pathOne: 2, pathTwo: 1 }
+  })
+
   dataHub.get(['persistent', 'connected'])
     .once(true)
     .then(() => {
       t.pass('connected to riak')
-      client.set({
-        someData: { to: 'test' },
-        someOther: 'data',
-        andAnother: { pathOne: 2, pathTwo: 1 }
-      })
-    })
 
-  setTimeout(() => {
-    dataHub.get('persistent').load(false)
-      .then(() => {
-        t.pass('load promise resolved')
-        client.set(null)
-        dataHub.set(null)
-        t.end()
+      return new Promise(resolve => setTimeout(resolve, 200))
+    })
+    .then(() => {
+      client.set(null)
+      dataHub.set(null)
+
+      dataHub.set({
+        persistent: {
+          bucket: 'testBucket',
+          nodes: [ '127.0.0.1' ]
+        }
       })
-      .catch(error => {
-        console.log('failed loading', error)
-      })
-  }, 1e3)
+
+      dataHub.get('persistent').load(false)
+        .then(() => {
+          t.deepEqual(dataHub.serialize(), {
+            persistent: { connected: true },
+            someData: { to: 'test' },
+            someOther: 'data',
+            andAnother: { pathOne: 2, pathTwo: 1 }
+          }, 'loaded correct data')
+          dataHub.set(null)
+          t.end()
+        })
+        .catch(error => {
+          console.log('failed loading', error)
+        })
+    })
 })
